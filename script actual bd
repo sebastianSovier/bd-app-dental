@@ -55,7 +55,6 @@ CREATE TABLE `contrasena_profesional` (
 CONSTRAINT `contrasena_profesional_fk_1` FOREIGN KEY (`id_profesional`) REFERENCES `profesional` (`id_profesional`) ON DELETE CASCADE ON UPDATE CASCADE)
 
 
-select * from puntuacion
 CREATE TABLE `contrasena_paciente` (
   `id_contrasena_paciente` int NOT NULL AUTO_INCREMENT,
   `id_paciente`int NOT NULL,
@@ -107,8 +106,6 @@ CREATE TABLE `agendamiento` (
 CONSTRAINT `agendamiento_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE
 
 )
-select * from estado_agendamiento ea 
-select a.id_agendamiento,a.id_paciente,a.fecha,a.hora,a.id_profesional from agendamiento a   where a.id_profesional = 1 order by a.id_agendamiento
 CREATE TABLE `estado_agendamiento` (
   `id_estado_agendamiento` int NOT NULL AUTO_INCREMENT,
   `id_agendamiento` int NOT NULL ,
@@ -221,14 +218,16 @@ CREATE TABLE `presupuesto_consulta` (
 CONSTRAINT `presupuesto_consulta_fk_1` FOREIGN KEY (`id_consulta_medica`) REFERENCES `consulta_medica` (`id_consulta_medica`) ON DELETE CASCADE ON UPDATE CASCADE
 
 )
-
 CREATE TABLE `tratamiento` (
   `id_tratamiento` int NOT NULL AUTO_INCREMENT,
+  `id_presupuesto_consulta` int NOT NULL,
   `nombre` varchar(200) NOT NULL ,
   `descripcion` varchar(200) NOT NULL ,
   `valor_unitario` int NOT NULL ,
   `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_tratamiento`)
+  PRIMARY KEY (`id_tratamiento`),
+   KEY `id_presupuesto_consulta` (`id_presupuesto_consulta`),
+CONSTRAINT `presupuesto_tratamiento_fk_1` FOREIGN KEY (`id_presupuesto_consulta`) REFERENCES `presupuesto_consulta` (`id_presupuesto_consulta`) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 insert into pregunta values(1,"¿motivo principal de consulta?",CURRENT_TIMESTAMP);
