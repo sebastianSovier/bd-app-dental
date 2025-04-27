@@ -1,0 +1,238 @@
+CREATE TABLE `paciente` (
+  `id_paciente` int NOT NULL AUTO_INCREMENT,
+  `rut` varchar(8) NOT NULL,
+  `nombres` varchar(200) NOT NULL,
+  `dv` varchar(1) NOT NULL,
+  `apellido_paterno` varchar(70) NOT NULL,
+  `apellido_materno` varchar(70) NOT NULL,
+  `fecha_nacimiento` Date NOT NULL,
+  `telefono` varchar(8) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `direccion` varchar(400) NOT NULL,
+  `id_perfil` int NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_paciente`)
+)
+CREATE TABLE `profesional` (
+  `id_profesional` int NOT NULL AUTO_INCREMENT,
+  `rut` varchar(8) NOT NULL,
+  `dv` varchar(1) NOT NULL,
+  `id_perfil` int NOT NULL,
+  `id_especialidad` int NOT NULL,
+  `nombres` varchar(100) NOT NULL,
+  `apellido_paterno` varchar(70) NOT NULL,
+  `apellido_materno` varchar(70) NOT NULL,
+  `fecha_nacimiento` Date NOT NULL,
+  `telefono` varchar(8) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `direccion` varchar(400) NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_profesional`));
+ 
+  insert into especialidad_profesional values(1,"Cirujano Dentista",CURRENT_TIMESTAMP);
+  insert into especialidad_profesional values(2,"Ortodoncista",CURRENT_TIMESTAMP);
+  insert into especialidad_profesional values(3,"Implantologo",CURRENT_TIMESTAMP);
+  insert into especialidad_profesional values(4,"Cirujano Estetico",CURRENT_TIMESTAMP);
+  insert into especialidad_profesional values(5,"Endodoncista",CURRENT_TIMESTAMP);
+ 
+ insert into profesional values(1,'22222222','2',1,"juanito andres","perez","mosa","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
+  insert into profesional values(2,'33333333','3',2,"andres antonio","moreno","galvez","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
+ insert into profesional values(3,'44444444','4',3,"pedro armando","cancino","vargas","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
+ insert into profesional values(4,'55555555','5',4,"hector mariano","adasme","bastias","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
+ insert into profesional values(5,'66666666','6',5,"enrique alberto","noguera","aravena","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
+
+ insert into profesional values(6,'99999999','9',0,"administrador","administrador","administrador","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
+
+
+ insert into contrasena_profesional values (4,6,"$2a$11$IpaZxSO5d9i95g4m5pKtWu8/ZG8pw9y3hAreWOesJwbgBd8Xyh0DK",CURRENT_TIMESTAMP)
+CREATE TABLE `contrasena_profesional` (
+  `id_contrasena_profesional` int NOT NULL AUTO_INCREMENT,
+  `id_profesional`int NOT NULL,
+  `contrasena` varchar(200) NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_contrasena_profesional`),
+    KEY `id_profesional` (`id_profesional`),
+CONSTRAINT `contrasena_profesional_fk_1` FOREIGN KEY (`id_profesional`) REFERENCES `profesional` (`id_profesional`) ON DELETE CASCADE ON UPDATE CASCADE)
+
+
+select * from puntuacion
+CREATE TABLE `contrasena_paciente` (
+  `id_contrasena_paciente` int NOT NULL AUTO_INCREMENT,
+  `id_paciente`int NOT NULL,
+  `contrasena` varchar(200) NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_contrasena_paciente`),
+  KEY `id_paciente` (`id_paciente`),
+CONSTRAINT `contrasena_paciente_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE
+
+)
+CREATE TABLE `antecedente_medico` (
+  `id_antecedente` int NOT NULL AUTO_INCREMENT,
+  `id_paciente` int NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_antecedente`),
+  KEY `id_paciente` (`id_paciente`),
+CONSTRAINT `antecedente_paciente_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE
+
+)
+CREATE TABLE `especialidad_profesional` (
+  `id_especialidad` int NOT NULL AUTO_INCREMENT,
+  `descripcion_especialidad` varchar(200) NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_especialidad`)
+)
+CREATE TABLE `consulta_medica` (
+  `id_consulta_medica` int NOT NULL AUTO_INCREMENT,
+  `id_paciente` int NOT NULL ,
+  `id_profesional` int NOT NULL,
+  `motivo_consulta` varchar(200) NOT NULL,
+  `observaciones` varchar(500) NOT NULL,
+  `id_agendamiento` int NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_consulta_medica`),
+    KEY `id_paciente` (`id_paciente`),
+CONSTRAINT `consulta_medica_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+CREATE TABLE `agendamiento` (
+  `id_agendamiento` int NOT NULL AUTO_INCREMENT,
+  `id_paciente` int NOT NULL ,
+  `id_profesional` int NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_agendamiento`),
+      KEY `id_paciente` (`id_paciente`),
+CONSTRAINT `agendamiento_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE
+
+)
+select * from estado_agendamiento ea 
+select a.id_agendamiento,a.id_paciente,a.fecha,a.hora,a.id_profesional from agendamiento a   where a.id_profesional = 1 order by a.id_agendamiento
+CREATE TABLE `estado_agendamiento` (
+  `id_estado_agendamiento` int NOT NULL AUTO_INCREMENT,
+  `id_agendamiento` int NOT NULL ,
+  `consulta_realizada` char(1) NOT NULL,
+  `estado` varchar(50) NOT NULL,
+  `notificado` char(1) NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_estado_agendamiento`),
+    KEY `id_agendamiento` (`id_agendamiento`),
+CONSTRAINT `estado_agendamiento_fk_1` FOREIGN KEY (`id_agendamiento`) REFERENCES `agendamiento` (`id_agendamiento`) ON DELETE CASCADE ON UPDATE CASCADE
+
+)
+create table `perfil`(
+ `id_perfil` int NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(50) NOT NULL ,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_perfil`)
+)
+
+insert into perfil values(1,'paciente',CURRENT_TIMESTAMP)
+insert into perfil values(2,'profesional',CURRENT_TIMESTAMP)
+insert into perfil values(3,'administrador',CURRENT_TIMESTAMP)
+
+ 
+CREATE TABLE `puntuacion` (
+  `id_puntuacion` int NOT NULL AUTO_INCREMENT,
+  `id_paciente` int NOT NULL ,
+  `id_profesional` int NOT NULL ,
+  `puntaje_general` int NOT NULL,
+  `recomendacion` int NOT NULL,
+  `claridad` int NOT NULL,
+  `puntualidad` int NOT NULL,
+  `empatia` int NOT NULL,
+  `cordialidad` int NOT NULL,
+  `nivel_satisfaccion` int NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_puntuacion`),
+  KEY `id_paciente` (`id_paciente`),
+CONSTRAINT `puntuacion_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`),
+KEY `id_profesional` (`id_profesional`),
+CONSTRAINT `puntuacion_fk_2` FOREIGN KEY (`id_profesional`) REFERENCES `profesional` (`id_profesional`)
+)
+CREATE TABLE `respuesta_paciente` (
+  `id_respuesta_paciente` int NOT NULL AUTO_INCREMENT,
+  `id_paciente` int NOT NULL ,
+  `id_pregunta` int NOT NULL ,
+  `respuesta` int NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_respuesta_paciente`),
+  KEY `id_paciente` (`id_paciente`),
+CONSTRAINT `respuesta_paciente_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE
+
+)
+CREATE TABLE `pregunta` (
+  `id_pregunta` int NOT NULL AUTO_INCREMENT,
+  `texto` varchar(500) NOT NULL ,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_pregunta`)
+)
+CREATE TABLE `alternativa_pregunta` (
+  `id_alternativa_pregunta` int NOT NULL AUTO_INCREMENT,
+  `id_pregunta` int NOT NULL,
+  `id_alternativa_respuesta` int NOT NULL,
+  `texto` varchar(500) NOT NULL ,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_alternativa_pregunta`),
+  KEY `id_pregunta` (`id_pregunta`),
+CONSTRAINT `pregunta_alternativa_fk_1` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id_pregunta`)
+)
+
+insert into alternativa_pregunta values(1,1,1,'Prevención',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(2,1,2,'Molestias',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(3,1,3,'Sensibilidad',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(4,1,4,'Estetico',CURRENT_TIMESTAMP);
+
+insert into alternativa_pregunta values(5,2,1,'SÍ',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(6,2,2,'NO',CURRENT_TIMESTAMP);
+
+insert into alternativa_pregunta values(7,3,1,'SÍ',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(8,3,2,'NO',CURRENT_TIMESTAMP);
+
+insert into alternativa_pregunta values(9,4,1,'Mal aliento',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(10,4,2,'Sarro',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(11,4,3,'Caries',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(12,4,4,'Mejorar la sonrisa',CURRENT_TIMESTAMP);
+
+insert into alternativa_pregunta values(13,5,1,'SÍ',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(14,5,2,'NO',CURRENT_TIMESTAMP);
+
+CREATE TABLE `examen_medico` (
+  `id_examen` int NOT NULL AUTO_INCREMENT,
+  `id_consulta_medica` int NOT NULL ,
+  `imagen_examen` longblob NOT NULL ,
+  `nombre_examen` varchar(200) NOT NULL,
+   `mime_type` varchar(200) NOT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_examen`),
+   KEY `id_consulta_medica` (`id_consulta_medica`),
+CONSTRAINT `examen_medico_fk_1` FOREIGN KEY (`id_consulta_medica`) REFERENCES `consulta_medica` (`id_consulta_medica`) ON DELETE CASCADE ON UPDATE CASCADE
+
+)
+
+CREATE TABLE `presupuesto_consulta` (
+  `id_presupuesto_consulta` int NOT NULL AUTO_INCREMENT,
+  `id_consulta_medica` int NOT NULL ,
+  `total` int NOT NULL ,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_presupuesto_consulta`),
+   KEY `id_consulta_medica` (`id_consulta_medica`),
+CONSTRAINT `presupuesto_consulta_fk_1` FOREIGN KEY (`id_consulta_medica`) REFERENCES `consulta_medica` (`id_consulta_medica`) ON DELETE CASCADE ON UPDATE CASCADE
+
+)
+
+CREATE TABLE `tratamiento` (
+  `id_tratamiento` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(200) NOT NULL ,
+  `descripcion` varchar(200) NOT NULL ,
+  `valor_unitario` int NOT NULL ,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_tratamiento`)
+)
+
+insert into pregunta values(1,"¿motivo principal de consulta?",CURRENT_TIMESTAMP);
+insert into pregunta values(2,"¿experiencias dentales previas?",CURRENT_TIMESTAMP);
+insert into pregunta values(3,"¿Ha tenido experiencias negativas odontologicas en el pasado?",CURRENT_TIMESTAMP);
+insert into pregunta values(4,"¿Tiene alguna preocupación específica sobre su salud bucal o su sonrisa?",CURRENT_TIMESTAMP);
+insert into pregunta values(5,"¿Está dispuesto/a a seguir un tratamiento integral si es necesario?",CURRENT_TIMESTAMP);
