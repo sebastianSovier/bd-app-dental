@@ -14,6 +14,7 @@ CREATE TABLE `paciente` (
   PRIMARY KEY (`id_paciente`),
   UNIQUE (`rut`) 
 );
+
 CREATE TABLE `profesional` (
   `id_profesional` int NOT NULL AUTO_INCREMENT,
   `rut` varchar(8) NOT NULL,
@@ -31,8 +32,6 @@ CREATE TABLE `profesional` (
   PRIMARY KEY (`id_profesional`),
  UNIQUE (`rut`) );
 
-insert into contrasena_profesional values(7,6,'$2a$11$IpaZxSO5d9i95g4m5pKtWu8/ZG8pw9y3hAreWOesJwbgBd8Xyh0DK',CURRENT_TIMESTAMP)
-update contrasena_profesional set contrasena = '$2a$11$IpaZxSO5d9i95g4m5pKtWu8/ZG8pw9y3hAreWOesJwbgBd8Xyh0DK'
 CREATE TABLE `contrasena_profesional` (
   `id_contrasena_profesional` int NOT NULL AUTO_INCREMENT,
   `id_profesional`int NOT NULL,
@@ -81,6 +80,8 @@ CREATE TABLE `consulta_medica` (
 CONSTRAINT `consulta_medica_fk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+
 CREATE TABLE `agendamiento` (
   `id_agendamiento` int NOT NULL AUTO_INCREMENT,
   `id_paciente` int NULL ,
@@ -112,7 +113,6 @@ create table `perfil`(
   PRIMARY KEY (`id_perfil`)
 );
 
- 
 CREATE TABLE `puntuacion` (
   `id_puntuacion` int NOT NULL AUTO_INCREMENT,
   `id_paciente` int NOT NULL ,
@@ -185,8 +185,6 @@ CONSTRAINT `presupuesto_consulta_fk_1` FOREIGN KEY (`id_consulta_medica`) REFERE
 
 );
 
-select * from estado_agendamiento ea 
-select * from paciente
 CREATE TABLE `tratamiento` (
   `id_tratamiento` int NOT NULL AUTO_INCREMENT,
   `id_presupuesto_consulta` int NOT NULL,
@@ -211,17 +209,19 @@ insert into alternativa_pregunta values(1,1,1,'Consulta',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(2,1,2,'Dolor',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(3,1,3,'Sensibilidad o molestia',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(4,1,4,'Estético',CURRENT_TIMESTAMP);
-
+insert into alternativa_pregunta values(15,1,5,'Ninguna de las anteriores',CURRENT_TIMESTAMP);
 
 insert into alternativa_pregunta values(5,2,1,'SÍ',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(6,2,2,'NO',CURRENT_TIMESTAMP);
 
 insert into alternativa_pregunta values(7,3,1,'SÍ',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(8,3,2,'NO',CURRENT_TIMESTAMP);
-insert into alternativa_pregunta values(9,4,1,'Mal aliento',CURRENT_TIMESTAMP);
+
+insert into alternativa_pregunta values(9,4,1,'Halitosis',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(10,4,2,'Sarro',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(11,4,3,'Caries',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(12,4,4,'Mejorar la sonrisa',CURRENT_TIMESTAMP);
+insert into alternativa_pregunta values(16,4,6,'Ninguna de las anteriores',CURRENT_TIMESTAMP);
 
 insert into alternativa_pregunta values(13,5,1,'SÍ',CURRENT_TIMESTAMP);
 insert into alternativa_pregunta values(14,5,2,'NO',CURRENT_TIMESTAMP);
@@ -249,5 +249,9 @@ insert into perfil values(3,'administrador',CURRENT_TIMESTAMP)
  insert into profesional values(1,'99999999','9','3',0,"administrador","administrador","administrador","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
 
  insert into contrasena_profesional values (6,6,"$2a$11$IpaZxSO5d9i95g4m5pKtWu8/ZG8pw9y3hAreWOesJwbgBd8Xyh0DK",CURRENT_TIMESTAMP)
+ 
+ 
+
+ 
  
  
