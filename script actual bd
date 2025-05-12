@@ -191,7 +191,6 @@ CONSTRAINT `presupuesto_tratamiento_fk_1` FOREIGN KEY (`id_presupuesto_consulta`
 `presupuesto_consulta` (`id_presupuesto_consulta`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
   insert into especialidad_profesional values(1,"Cirujano Dentista",CURRENT_TIMESTAMP);
   insert into especialidad_profesional values(2,"Ortodoncista",CURRENT_TIMESTAMP);
   insert into especialidad_profesional values(3,"Implantologo",CURRENT_TIMESTAMP);
@@ -234,12 +233,7 @@ insert into perfil values(1,'paciente',CURRENT_TIMESTAMP);
 insert into perfil values(2,'profesional',CURRENT_TIMESTAMP);
 insert into perfil values(3,'administrador',CURRENT_TIMESTAMP);
 
- insert into profesional values(2,'22222222','2','2',1,"juanito andres","perez","mosa","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
-  insert into profesional values(3,'33333333','3','2',2,"andres antonio","moreno","galvez","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
- insert into profesional values(4,'44444444','4','2',3,"pedro armando","cancino","vargas","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
- insert into profesional values(5,'55555555','5','2',4,"hector mariano","adasme","bastias","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
- insert into profesional values(6,'66666666','6','2',5,"enrique alberto","noguera","aravena","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
-
  insert into profesional values(1,'99999999','9','3',0,"administrador","administrador","administrador","1989-10-19","1111111","re@re.cl","los canelos 333",CURRENT_TIMESTAMP);
 
- insert into contrasena_profesional values (6,6,"$2a$11$IpaZxSO5d9i95g4m5pKtWu8/ZG8pw9y3hAreWOesJwbgBd8Xyh0DK",CURRENT_TIMESTAMP);
+ insert into contrasena_profesional values (1,1,"$2a$11$IpaZxSO5d9i95g4m5pKtWu8/ZG8pw9y3hAreWOesJwbgBd8Xyh0DK",CURRENT_TIMESTAMP);
+ 
